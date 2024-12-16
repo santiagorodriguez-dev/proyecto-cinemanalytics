@@ -20,7 +20,7 @@ def get_datos_movies(genre, titleType, page,key ):
             'x-rapidapi-key': key,
             'x-rapidapi-host': "moviesdatabase.p.rapidapi.com"
         }
-
+        print(page)
         url_data = f"/titles?genre={genre}&startYear=1990&titleType={titleType}&sort=year.incr&page={page}"
 
         url.request(f"GET", url_data, headers=headers)
@@ -55,13 +55,12 @@ def alamacenar_datos_in_csv(key):
     genre = ["Horror"]
     titleType = ["movie"]
      
-    for p in range(1,3):
+    for p in range(1,10):
         for g in genre:
             for t in titleType:
-                time.sleep(5) # Sleep for 3 seconds
+                time.sleep(6) # Sleep for 3 seconds
                 diccionario = get_datos_movies(g, t, p, key)
                 df_temp = pd.DataFrame(diccionario)
-                break
 
             df_final = pd.concat([df_temp, df_final], ignore_index=True)
             df_final.to_csv(f"../data/data_movies.csv")
